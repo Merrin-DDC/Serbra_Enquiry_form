@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="th">
+<style>
+    html {
+        scroll-behavior: smooth;
+    }
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    html,
+    body {
+        width: 100%;
+        font-family: system-ui, sans-serif;
+        background: #f5f5f5;
+    }
+
+    body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100%;
+        color: #333;
+    }
+
+    /* Header */
+    header {
+        background: #174875;
+        display: flex;
+        border-radius: 10px;
+        align-items: center;
+        padding: 10px 20px;
+    }
+
+    header img {
+        max-height: 60px;
+        object-fit: contain;
+    }
+
+    /* Main */
+    main {
+        flex: 10 auto;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 20px;
+    }
+
+    /* Quote container */
+    .quote-container {
+        display: flex;
+        flex-direction: column;
+        max-width: 100%;
+        width: 90%;
+        background: #fff;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+        margin: 20px auto;
+    }
+
+    .form-section {
+        width: 100%;
+        padding: 20px 30px;
+    }
+
+    .form-section h2 {
+        margin-bottom: 20px;
+    }
+
+    /* Form */
+    .form-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .form-row {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    label {
+        display: block;
+        font-weight: 600;
+        color: #174875;
+        ;
+        margin-bottom: 5px;
+    }
+
+    input {
+        padding: 12px 16px;
+        font-size: 1.0rem;
+        border-radius: 8px;
+        border: none;
+        width: 100%;
+        background-color: #f5f5f5;
+    }
+
+    input:focus {
+        outline: none;
+    }
+
+    /* Service button */
+    #serviceToggle {
+        padding: 12px 16px;
+        font-size: 1.0rem;
+        border-radius: 8px;
+        border: none;
+        width: 100%;
+        background-color: #f5f5f5;
+        cursor: pointer;
+    }
+
+    #serviceToggle.active {
+        background: #174875;
+        ;
+        color: #fff;
+    }
+
+    .subservice-options {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        margin-top: 15px;
+    }
+
+    .subservice-options input[type="checkbox"] {
+        width: 20px;
+        height: 20px;
+        accent-color: #174875;
+        cursor: pointer;
+    }
+
+    .subservice-options label {
+        font-size: 1.0rem;
+        color: #333;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .service-group h4 {
+        font-size: 1.0rem;
+        color: #174875;
+        ;
+        margin: 10px 0px;
+    }
+
+    /* Submit Button */
+    button[type="submit"] {
+        background: #c2dcf5;
+        color: #174875;
+        font-weight: 600;
+        cursor: pointer;
+        border: none;
+        transition: 0.2s;
+        height: 50px;
+        width: 100%;
+        border-radius: 30px;
+    }
+
+    button[type="submit"]:hover {
+        background: #174875;
+        ;
+        transform: translateY(-2px);
+    }
+
+    button[type="submit"]:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+    }
+
+    .button-row {
+        margin-top: 10px;
+        display: flex;
+        justify-content: center;
+    }
+
+    @media (max-width: 480px) {
+        .form-section {
+            padding: 15px;
+        }
+    }
+</style>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SeABRA Warehouse Enquiry Form</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Sarabun:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="background-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+    </div>
+
+    <div class="container">
+        <header class="form-header">
+            <img src="https://i.imghippo.com/files/ziqj5305k.png" alt="SeABRA Logo">
+            <div class="logo-area">
+                <!-- Placeholder for Logo if needed, using text for now -->
+                <h1>SeABRA WAREHOUSE</h1>
+            </div>
+            <h2>แบบฟอร์มสอบถามข้อมูลบริการ (Enquiry Form)</h2>
+            <p>กรุณากรอกข้อมูลเพื่อให้เราเสนอราคาที่เหมาะสมที่สุดสำหรับคุณ</p>
+        </header>
+
+        <form id="enquiryForm">
+            <!-- Section 2: Service Selection -->
+            <section class="form-section" id="section-service-type">
+                <h3><i class="fa-solid fa-boxes-stacked"></i> บริการที่คุณกำลังมองหา (Service Selection)</h3>
+                <p class="section-desc">กรุณาเลือกบริการหลักที่คุณสนใจเพียง 1 ข้อ</p>
+
+                <div class="radio-cards">
+                    <label class="radio-card">
+                        <input type="radio" name="serviceType" value="General" required onchange="toggleSections()">
+                        <div class="card-content">
+                            <i class="fa-solid fa-warehouse"></i>
+                            <h4>General Warehouse</h4>
+                            <p>จัดเก็บและกระจายสินค้าทั่วไป (B2B)</p>
+                        </div>
+                    </label>
+
+                    <label class="radio-card">
+                        <input type="radio" name="serviceType" value="Cold" required onchange="toggleSections()">
+                        <div class="card-content">
+                            <i class="fa-solid fa-snowflake"></i>
+                            <h4>Cold Storage</h4>
+                            <p>จัดเก็บและกระจายสินค้าควบคุมอุณหภูมิ (B2B)</p>
+                        </div>
+                    </label>
+
+                    <label class="radio-card">
+                        <input type="radio" name="serviceType" value="Fulfillment" required onchange="toggleSections()">
+                        <div class="card-content">
+                            <i class="fa-solid fa-box-open"></i>
+                            <h4>Fulfillment</h4>
+                            <p>เก็บ-แพ็ค-ส่ง ขายออนไลน์ (B2B2C)</p>
+                        </div>
+                    </label>
+
+                    <label class="radio-card">
+                        <input type="radio" name="serviceType" value="Delivery" required onchange="toggleSections()">
+                        <div class="card-content">
+                            <i class="fa-solid fa-motorcycle"></i>
+                            <h4>Delivery Service</h4>
+                            <p>ส่งอาหาร/สินค้าด่วน (Grab/Robinhood etc.)</p>
+                        </div>
+                    </label>
+
+                    <label class="radio-card">
+                        <input type="radio" name="serviceType" value="PackMove" required onchange="toggleSections()">
+                        <div class="card-content">
+                            <i class="fa-solid fa-truck-moving"></i>
+                            <h4>Pack & Move</h4>
+                            <p>ขนย้ายครบวงจร บ้าน/ออฟฟิศ/บูธ</p>
+                        </div>
+                    </label>
+                </div>
+            </section>
+
+            <!-- Conditional Section: General & Cold Storage (B2B) -->
+            <section class="form-section hidden" id="details-b2b">
+                <h3><i class="fa-solid fa-clipboard-list"></i> รายละเอียดสินค้า (General & Cold Storage)</h3>
+
+                <div class="form-group">
+                    <label>ประเภทสินค้า (Product Type) *</label>
+                    <select name="b2b_productType" class="full-width-select">
+                        <option value="" disabled selected>กรุณาเลือก</option>
+                        <option value="Food">อาหาร (Food)</option>
+                        <option value="Non-Food">สินค้าทั่วไป (Non-Food)</option>
+                        <option value="PET">สินค้าสำหรับสัตว์เลี้ยง (PET)</option>
+                        <option value="Cosmetics">เครื่องสำอางค์ (Cosmetics)</option>
+                        <option value="Health&Wellness">อาหารเสริม (Health&Wellness)</option>
+                        <option value="ETC">อื่นๆ (ETC.)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>อุณหภูมิจัดเก็บ (Storage Temperature) *</label>
+                    <div class="radio-group-vertical">
+                        <label class="radio-option"><input type="radio" name="b2b_temp" value="Ambient"> Ambient
+                            (ไม่ควบคุมอุณหภูมิ)</label>
+                        <label class="radio-option"><input type="radio" name="b2b_temp" value="25 Degree"> 25 Degree (25
+                            องศา)</label>
+                        <label class="radio-option"><input type="radio" name="b2b_temp" value="Chilled"> Chilled (+2-6
+                            องศา)</label>
+                        <label class="radio-option"><input type="radio" name="b2b_temp" value="Frozen"> Frozen (-18
+                            องศา)</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>ระยะเวลาที่จะจัดเก็บ (Storage Duration)</label>
+                    <input type="text" name="b2b_duration" placeholder="เช่น รายวัน / รายเดือน">
+                </div>
+
+                <div class="form-group">
+                    <label>สถานที่จัดส่งสินค้าในปัจจุบัน (เลือกได้มากกว่า 1 ข้อ)</label>
+                    <div class="checkbox-group">
+                        <label class="checkbox-option"><input type="checkbox" name="b2b_dest"
+                                value="Distribution center"> Distribution center</label>
+                        <label class="checkbox-option"><input type="checkbox" name="b2b_dest" value="Standalone">
+                            Standalone</label>
+                        <label class="checkbox-option"><input type="checkbox" name="b2b_dest" value="Shop/branch">
+                            Shop/branch</label>
+                        <label class="checkbox-option"><input type="checkbox" name="b2b_dest" value="Store">
+                            Store</label>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Conditional Section: Fulfillment (B2B2C) -->
+            <section class="form-section hidden" id="details-fulfillment">
+                <h3><i class="fa-solid fa-clipboard-list"></i> รายละเอียดสินค้า (Fulfillment)</h3>
+
+                <div class="form-group">
+                    <label>ประเภทสินค้า (Product Type) *</label>
+                    <select name="fulfillment_productType" class="full-width-select">
+                        <option value="" disabled selected>กรุณาเลือก</option>
+                        <option value="Food">อาหาร (Food)</option>
+                        <option value="Non-Food">สินค้าทั่วไป (Non-Food)</option>
+                        <option value="PET">สินค้าสำหรับสัตว์เลี้ยง (PET)</option>
+                        <option value="Cosmetics">เครื่องสำอางค์ (Cosmetics)</option>
+                        <option value="Health&Wellness">อาหารเสริม (Health&Wellness)</option>
+                        <option value="ETC">อื่นๆ (ETC.)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>อุณหภูมิจัดเก็บ (Storage Temperature) *</label>
+                    <div class="radio-group-vertical">
+                        <label class="radio-option"><input type="radio" name="fulfillment_temp" value="Ambient"> Ambient
+                            (ไม่ควบคุมอุณหภูมิ)</label>
+                        <label class="radio-option"><input type="radio" name="fulfillment_temp" value="25 Degree"> 25
+                            Degree (25 องศา)</label>
+                        <label class="radio-option"><input type="radio" name="fulfillment_temp" value="Chilled"> Chilled
+                            (+2-6 องศา)</label>
+                        <label class="radio-option"><input type="radio" name="fulfillment_temp" value="Frozen"> Frozen
+                            (-18 องศา)</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>ช่องทางการขายออนไลน์ปัจจุบัน (เลือกได้มากกว่า 1 ข้อ) *</label>
+                    <div class="checkbox-group">
+                        <label class="checkbox-option"><input type="checkbox" name="fulfillment_channel" value="Shopee">
+                            Shopee</label>
+                        <label class="checkbox-option"><input type="checkbox" name="fulfillment_channel" value="Lazada">
+                            Lazada</label>
+                        <label class="checkbox-option"><input type="checkbox" name="fulfillment_channel" value="Tiktok">
+                            Tiktok</label>
+                        <label class="checkbox-option"><input type="checkbox" name="fulfillment_channel"
+                                value="Line Shopping"> Line Shopping</label>
+                        <label class="checkbox-option"><input type="checkbox" name="fulfillment_channel" value="Other">
+                            อื่นๆ</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>ปริมาณออเดอร์เฉลี่ย / เดือน *</label>
+                    <select name="fulfillment_orders" class="full-width-select">
+                        <option value="" disabled selected>กรุณาเลือก</option>
+                        <option value="500">500 ออเดอร์/เดือน</option>
+                        <option value="1000">1,000 ออเดอร์/เดือน</option>
+                        <option value="3000">3,000 ออเดอร์/เดือน</option>
+                        <option value="5000">5,000 ออเดอร์/เดือน</option>
+                        <option value="8000">8,000 ออเดอร์/เดือน</option>
+                        <option value="10000">10,000 ออเดอร์/เดือน</option>
+                        <option value="Other">อื่นๆ</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>ต้องการบริการขนส่งด้วยหรือไม่ (เลือกได้มากกว่า 1 ข้อ)</label>
+                    <div class="checkbox-group">
+                        <label class="checkbox-option"><input type="checkbox" name="fulfillment_transport"
+                                value="Seabra rider"> Seabra rider express (4 ชม.)</label>
+                        <label class="checkbox-option"><input type="checkbox" name="fulfillment_transport"
+                                value="Thai Post"> ไปรษณีย์ไทย (ไม่คุมอุณหภูมิ)</label>
+                        <label class="checkbox-option"><input type="checkbox" name="fulfillment_transport" value="Fuze">
+                            Fuze (คุมอุณหภูมิ)</label>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Conditional Section: Delivery (B2C) -->
+            <section class="form-section hidden" id="details-delivery">
+                <h3><i class="fa-solid fa-clipboard-list"></i> รายละเอียดสินค้า (Delivery Platform)</h3>
+
+                <div class="form-group">
+                    <label>ประเภทสินค้า (Product Type) *</label>
+                    <select name="delivery_productType" class="full-width-select">
+                        <option value="" disabled selected>กรุณาเลือก</option>
+                        <option value="Food">อาหาร (Food)</option>
+                        <option value="Non-Food">สินค้าทั่วไป (Non-Food)</option>
+                        <option value="PET">สินค้าสำหรับสัตว์เลี้ยง (PET)</option>
+                        <option value="Cosmetics">เครื่องสำอางค์ (Cosmetics)</option>
+                        <option value="Health&Wellness">อาหารเสริม (Health&Wellness)</option>
+                        <option value="ETC">อื่นๆ (ETC.)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>อุณหภูมิจัดเก็บ (Storage Temperature) *</label>
+                    <div class="radio-group-vertical">
+                        <label class="radio-option"><input type="radio" name="delivery_temp" value="Ambient"> Ambient
+                            (ไม่ควบคุมอุณหภูมิ)</label>
+                        <label class="radio-option"><input type="radio" name="delivery_temp" value="25 Degree"> 25
+                            Degree (25 องศา)</label>
+                        <label class="radio-option"><input type="radio" name="delivery_temp" value="Chilled"> Chilled
+                            (+2-6 องศา)</label>
+                        <label class="radio-option"><input type="radio" name="delivery_temp" value="Frozen"> Frozen (-18
+                            องศา)</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>ช่องทางการขายออนไลน์ปัจจุบัน (เลือกได้มากกว่า 1 ข้อ) *</label>
+                    <div class="checkbox-group">
+                        <label class="checkbox-option"><input type="checkbox" name="delivery_channel" value="Grab mart">
+                            Grab mart</label>
+                        <label class="checkbox-option"><input type="checkbox" name="delivery_channel" value="Lineman">
+                            Lineman</label>
+                        <label class="checkbox-option"><input type="checkbox" name="delivery_channel" value="Robinhood">
+                            Robinhood</label>
+                        <label class="checkbox-option"><input type="checkbox" name="delivery_channel"
+                                value="Shopee foods"> Shopee foods</label>
+                        <label class="checkbox-option"><input type="checkbox" name="delivery_channel" value="Other">
+                            อื่นๆ</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>ปริมาณออเดอร์เฉลี่ย / เดือน *</label>
+                    <select name="delivery_orders" class="full-width-select">
+                        <option value="" disabled selected>กรุณาเลือก</option>
+                        <option value="500">500 ออเดอร์/เดือน</option>
+                        <option value="1000">1,000 ออเดอร์/เดือน</option>
+                        <option value="2000">2,000 ออเดอร์/เดือน</option>
+                        <option value="Other">อื่นๆ</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>ลักษณะการแพ็คสินค้าก่อนส่ง Rider</label>
+                    <textarea name="delivery_packing" rows="3" placeholder="อธิบายลักษณะการแพ็ค..."></textarea>
+                </div>
+            </section>
+
+            <!-- Conditional Section: Pack & Move (B2G) -->
+            <section class="form-section hidden" id="details-packmove">
+                <h3><i class="fa-solid fa-truck-ramp-box"></i> รายละเอียดการขนย้าย (Pack & Move)</h3>
+
+                <div class="form-group">
+                    <label>1. ที่อยู่ต้นทาง (Origin)</label>
+                    <textarea name="move_origin_address" rows="2"
+                        placeholder="ระบุที่อยู่ หรือแนบลิงก์ Google Maps"></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>ประเภทต้นทาง</label>
+                        <select name="move_origin_type" class="full-width-select">
+                            <option value="House">บ้านเดี่ยว</option>
+                            <option value="Townhouse">ทาวน์เฮ้าส์/ทาวน์โฮม</option>
+                            <option value="Office">อาคารสำนักงาน/ตึก</option>
+                            <option value="Condo">คอนโด/หอพัก</option>
+                            <option value="Warehouse">คลังสินค้า</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>จำนวนชั้น</label>
+                        <input type="number" name="move_origin_floors" placeholder="ระบุ">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>มีลิฟท์ขนของหรือไม่?</label>
+                    <div class="radio-group-horizontal">
+                        <label class="radio-option"><input type="radio" name="move_origin_lift" value="Yes"> มี</label>
+                        <label class="radio-option"><input type="radio" name="move_origin_lift" value="No">
+                            ไม่มี</label>
+                    </div>
+                </div>
+
+                <hr class="divider">
+
+                <div class="form-group">
+                    <label>2. ที่อยู่ปลายทาง (Destination)</label>
+                    <textarea name="move_dest_address" rows="2"
+                        placeholder="ระบุที่อยู่ หรือแนบลิงก์ Google Maps"></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>ประเภทปลายทาง</label>
+                        <select name="move_dest_type" class="full-width-select">
+                            <option value="House">บ้านเดี่ยว</option>
+                            <option value="Townhouse">ทาวน์เฮ้าส์/ทาวน์โฮม</option>
+                            <option value="Office">อาคารสำนักงาน/ตึก</option>
+                            <option value="Condo">คอนโด/หอพัก</option>
+                            <option value="Warehouse">คลังสินค้า</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>จำนวนชั้น</label>
+                        <input type="number" name="move_dest_floors" placeholder="ระบุ">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>มีลิฟท์ขนของหรือไม่?</label>
+                    <div class="radio-group-horizontal">
+                        <label class="radio-option"><input type="radio" name="move_dest_lift" value="Yes"> มี</label>
+                        <label class="radio-option"><input type="radio" name="move_dest_lift" value="No"> ไม่มี</label>
+                    </div>
+                </div>
+
+                <hr class="divider">
+
+                <div class="form-group">
+                    <label>3. ต้องการให้เตรียมกล่อง/แพ็คกันกระแทก?</label>
+                    <div class="radio-group-vertical">
+                        <label class="radio-option"><input type="radio" name="move_packing" value="Yes"> ต้องการ</label>
+                        <label class="radio-option"><input type="radio" name="move_packing" value="No">
+                            ไม่ต้องการ</label>
+                        <label class="radio-option"><input type="radio" name="move_packing" value="Compare">
+                            ต้องการเทียบราคา 2 แบบ</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>4. รูปภาพของที่ต้องการขนย้าย (แนบไฟล์)</label>
+                    <p class="small-text">กรุณาแนบรูปและวงกลมของที่ต้องการขนย้าย หรือกากบาทของที่ไม่ต้องการ</p>
+                    <input type="file" id="move_files" name="move_files" multiple accept="image/*">
+                </div>
+            </section>
+
+            <!-- Common Section: Master Product Info (Hidden for Pack & Move) -->
+            <section class="form-section hidden" id="details-master-product">
+                <h3><i class="fa-solid fa-file-invoice"></i> ข้อมูลสินค้า (Master Product Data)</h3>
+                <p class="section-desc">กรุณาแนบไฟล์หรือกรอกข้อมูลสินค้าคร่าวๆ (รหัส, ชื่อ, หน่วย, ขนาด, น้ำหนัก, Shelf
+                    Life)</p>
+
+                <div class="form-group">
+                    <label>แนบไฟล์ข้อมูลสินค้า (Upload File)</label>
+                    <input type="file" id="product_file" name="product_file"
+                        accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.png">
+                </div>
+
+                <div class="form-group">
+                    <label>หรือ กรอกรายละเอียดสินค้า</label>
+                    <textarea name="product_details_text" rows="4"
+                        placeholder="รหัสสินค้า, ชื่อสินค้า, ขนาด, น้ำหนัก..."></textarea>
+                </div>
+            </section>
+
+            <!-- Final Section: Additional Info -->
+            <section class="form-section" id="section-additional">
+                <h3><i class="fa-solid fa-comment-dots"></i> ข้อมูลเพิ่มเติม (Additional Information)</h3>
+                <div class="form-group">
+                    <label>ข้อมูลอื่นๆ ที่อยากแจ้งให้ทราบ</label>
+                    <textarea name="additionalInfo" rows="3" placeholder="ระบุข้อมูลเพิ่มเติม..."></textarea>
+                </div>
+            </section>
+
+            <!-- Section 1: Contact Information -->
+            <section class="form-section" id="section-contact">
+                <h3><i class="fa-solid fa-address-card"></i> ข้อมูลผู้ติดต่อ (Contact Information)</h3>
+
+                <div class="form-group">
+                    <label for="companyName">ชื่อบริษัท (Company Name) *</label>
+                    <input type="text" id="companyName" name="companyName" required placeholder="ระบุชื่อบริษัทของคุณ">
+                </div>
+
+                <div class="form-group">
+                    <label for="contactName">ชื่อผู้ติดต่อ (Contact Name) *</label>
+                    <input type="text" id="contactName" name="contactName" required placeholder="ระบุชื่อผู้ติดต่อ">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="email">อีเมล (E-Mail) *</label>
+                        <input type="email" id="email" name="email" required placeholder="example@company.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">เบอร์โทร (Phone) *</label>
+                        <input type="tel" id="phone" name="phone" required placeholder="08x-xxx-xxxx">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>ช่องทางที่เห็น SeABRA WAREHOUSE (เลือกได้มากกว่า 1 ข้อ) *</label>
+                    <div class="checkbox-group">
+                        <label class="checkbox-option">
+                            <input type="checkbox" name="source" value="Facebook">
+                            <span>Facebook</span>
+                        </label>
+                        <label class="checkbox-option">
+                            <input type="checkbox" name="source" value="Line OA">
+                            <span>Line OA</span>
+                        </label>
+                        <label class="checkbox-option">
+                            <input type="checkbox" name="source" value="E-Mail">
+                            <span>E-Mail</span>
+                        </label>
+                        <label class="checkbox-option">
+                            <input type="checkbox" name="source" value="Tiktok">
+                            <span>Tiktok</span>
+                        </label>
+                        <label class="checkbox-option">
+                            <input type="checkbox" name="source" value="Website">
+                            <span>Website</span>
+                        </label>
+                    </div>
+                </div>
+            </section>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-submit">
+                    <span id="btnText">ส่งข้อมูล (Submit Enquiry)</span>
+                    <i class="fa-solid fa-paper-plane"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Loading Overlay 
+    <div id="loadingOverlay" class="loading-overlay hidden">
+        <div class="spinner"></div>
+        <p>กำลังส่งข้อมูล... (Sending Data)</p>
+    </div>-->
+
+    <!-- Success Modal 
+    <div id="successModal" class="modal hidden">
+        <div class="modal-content">
+            <i class="fa-solid fa-circle-check success-icon"></i>
+            <h3>ส่งข้อมูลสำเร็จ!</h3>
+            <p>ขอบคุณที่สนใจบริการของเรา เราจะติดต่อกลับทางอีเมลโดยเร็วที่สุด</p>
+            <button onclick="closeModal()" class="btn-close">ตกลง</button>
+        </div>
+    </div>-->
+
+    <script src="script.js"></script>
+</body>
+
+</html>
